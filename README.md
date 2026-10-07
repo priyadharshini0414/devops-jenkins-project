@@ -48,6 +48,7 @@ devops-jenkins-project/
 │   ├── inventory            # Targets the container via the docker connection
 │   ├── playbook.yml         # Installs Nginx, copies the site, starts Nginx
 │   └── files/index.html     # The website
+├── screenshots/             # Proof of pipeline runs
 └── .gitignore
 ```
 
@@ -75,6 +76,33 @@ devops-jenkins-project/
 5. Create a Jenkins Pipeline job using "Pipeline script from SCM" pointing to this repository (branch `main`, script path `Jenkinsfile`) with Poll SCM set to `H/2 * * * *`.
 6. Click Build Now, approve at the Approval stage, then open http://localhost:8081.
 
+## Screenshots
+
+### Pipeline run (all stages green)
+![Pipeline Stage View](screenshots/stage-view.png)
+
+### Manual approval gate
+![Approval gate](screenshots/approval.png)
+
+### Automatic build from a Git push
+![Auto-triggered build](screenshots/auto-trigger.png)
+
+### Ansible result (changed=1, idempotent)
+![Ansible PLAY RECAP](screenshots/ansible-recap.png)
+
+### Website before and after the pipeline update
+![Before](screenshots/website-before.png)
+![After](screenshots/website-after.png)
+
+### Running container
+![Container](screenshots/docker-ps.png)
+
+### Pipeline completion
+![Post actions](screenshots/post-actions.png)
+
+### Environment setup
+![Tool versions](screenshots/tools-versions.png)
+
 ## Idempotency Demo
 
 After the first run, I changed only the website text and pushed. Jenkins started a build automatically ("Started by an SCM change"). Terraform reported **No changes**, and Ansible reported `ok=4 changed=1`, because only the copied file differed. Re-running a playbook leaves an already-correct system untouched.
@@ -99,6 +127,5 @@ After the first run, I changed only the website text and pushed. Jenkins started
 - Add monitoring with Prometheus and Grafana.
 
 ## Author
-Priyadharshini | [GitHub](https://github.com/priyadharshini0414)
 
 Priyadharshini | [GitHub](https://github.com/priyadharshini0414)
